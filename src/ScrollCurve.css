@@ -1,0 +1,27 @@
+.curve-region {
+  position: relative;
+}
+
+.scroll-curve {
+  pointer-events: none;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.scroll-curve-path {
+  fill: none;
+  stroke: #efe9d8;
+  stroke-width: 12px;
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 600px) {
+  .scroll-curve {
+    display: none;
+  }
+}

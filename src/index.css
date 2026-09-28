@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+:root {
+  --text: #6b6375; /* body copy */
+  --text-h: #08060d; /* headings - nearly black */
+  --bg: #fff;
+  --border: #e5e4e7;
+  --accent: #aa3bff; /* pick ONE. commit to it. */
+  --accent-bg: rgba(170, 59, 255, 0.1);
+
+  --sans: 'Roboto Flex', system-ui, sans-serif;
+  
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d; /* never pure black. it hurts. */
+    --accent: #c084fc; /* lighter - dark bgs eat saturation */
+  }
+}
+
+@media (max-width: 1024px) {
+  :root { font-size: 16px; }
+}
+
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge */
+}
+html::-webkit-scrollbar { display: none; } /* Chrome, Safari */
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-h);
+}
+
+/* site-main: NO overflow:hidden — it breaks position:sticky on descendants */
+.site-main {
+  position: relative;
+}

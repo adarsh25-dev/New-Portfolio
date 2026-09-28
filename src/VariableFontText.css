@@ -1,0 +1,16 @@
+.vft {
+  font-variation-settings: "wght" 820, "wdth" 151;
+  font-family: 'Roboto Flex', system-ui, sans-serif;
+}
+
+.vft-letter {
+  white-space: pre;
+  will-change: font-variation-settings;
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vft-letter {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,42 @@
+.footer-reveal {
+  height: 200vh;
+  position: relative;
+}
+
+.footer-panel {
+  z-index: 0;
+  pointer-events: none;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.footer-wordmark {
+  --baseline-trim: 0.21em;
+  margin: 0 0 calc(-1 * var(--baseline-trim));
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: #efe9d8;
+  text-shadow: 0 2px 56px #00000073;
+  transform-origin: center calc(100% - var(--baseline-trim));
+  will-change: transform;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  font-family: Archivo, system-ui, sans-serif;
+  font-size: clamp(4rem, 25vw, 22rem);
+  font-weight: 900;
+  line-height: 1;
+  transform: scaleY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-wordmark {
+    transform: none !important;
+  }
+}
