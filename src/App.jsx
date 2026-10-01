@@ -14,6 +14,7 @@ import Roles from './Roles';
 import FeaturedWorks from './FeaturedWorks';
 import Contact from './Contact';
 import Footer from './Footer';
+import DeviceNoticeScreen from './DeviceNoticeScreen';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,11 +23,22 @@ export default function App() {
     typeof window !== 'undefined' &&
     window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
+  const [isDesktop, setIsDesktop] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth > 1024 : true;
+  });
+
   const [showIntro, setShowIntro] = useState(!prefersReducedMotion);
   const [studioReached, setStudioReached] = useState(false);
   const curveRegionRef = useRef(null);
   const studioRef = useRef(null);
   const lenisRef = useRef(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1025px)');
+    const onChange = (e) => setIsDesktop(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
 
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
@@ -58,9 +70,9 @@ export default function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Boot Lenis after intro
+  // Boot Lenis after intro (desktop only)
   useEffect(() => {
-    if (showIntro) return;
+    if (showIntro || !isDesktop) return;
 
     const lenis = new Lenis({
       duration: 0.8,
@@ -88,10 +100,11 @@ export default function App() {
       lenisRef.current = null;
       window.__lenis = null;
     };
-  }, [showIntro]);
+  }, [showIntro, isDesktop]);
 
   return (
     <>
+      <DeviceNoticeScreen />
       {showIntro && <IntroLoader onComplete={() => setShowIntro(false)} />}
       <ScrollBackground zoomed={studioReached} />
       <FixedVideoBg />

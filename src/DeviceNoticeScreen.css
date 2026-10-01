@@ -1,0 +1,340 @@
+/* Device Notice Screen - Centered Fullscreen Experience for Mobile & Tablet */
+
+/* Hidden on desktop / laptop viewports by default */
+.device-notice-root {
+  display: none;
+}
+
+/* Strictly visible on mobile and tablet displays (≤ 1024px) */
+@media (max-width: 1024px) {
+  .device-notice-root {
+    display: flex !important;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100svh;
+    height: 100vh; /* fallback */
+    z-index: 999999;
+    background-color: #61180b;
+    color: #efe9d8;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(24px, 5vw, 48px) clamp(20px, 5vw, 36px);
+    box-sizing: border-box;
+    isolation: isolate;
+  }
+}
+
+/* ==========================================================================
+   AMBIENT BACKGROUND LAYERS (Hero Image, Blur, SVG Grain, Vignette)
+   ========================================================================== */
+
+.dns-bg-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Project Hero Background Image - zoomed to warm core to eliminate dark photo edges */
+.dns-bg-image {
+  position: absolute;
+  inset: -100px;
+  background: url(/assets/hero_bg-CfSw2las.png) 25% 25% / 175% 175% no-repeat;
+  filter: blur(28px) brightness(0.92) saturate(1.3);
+  transform: scale(1.25);
+  opacity: 1;
+  will-change: transform, filter;
+}
+
+/* Luminous ambient radial glow orbs */
+.dns-glow-gold {
+  position: absolute;
+  top: 10%;
+  right: -5%;
+  width: min(90vw, 550px);
+  height: min(90vw, 550px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(235, 130, 40, 0.25) 0%, rgba(216, 182, 90, 0.08) 50%, transparent 75%);
+  filter: blur(60px);
+  animation: dnsGlowPulse 8s ease-in-out infinite alternate;
+}
+
+.dns-glow-crimson {
+  position: absolute;
+  bottom: 0%;
+  left: -5%;
+  width: min(95vw, 600px);
+  height: min(95vw, 600px);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 70, 20, 0.28) 0%, rgba(180, 50, 15, 0.08) 50%, transparent 75%);
+  filter: blur(60px);
+  animation: dnsGlowShift 10s ease-in-out infinite alternate;
+}
+
+@keyframes dnsGlowPulse {
+  0% {
+    transform: scale(0.92) translate(0, 0);
+    opacity: 0.75;
+  }
+  100% {
+    transform: scale(1.1) translate(-20px, 20px);
+    opacity: 1;
+  }
+}
+
+@keyframes dnsGlowShift {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15) translate(25px, -25px);
+    opacity: 1;
+  }
+}
+
+/* Translucent blurred slightly dark overlay covering the whole screen */
+.dns-dark-overlay {
+  position: absolute;
+  inset: 0;
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  backdrop-filter: blur(28px) saturate(160%);
+  background: rgba(10, 8, 14, 0.76);
+  z-index: 1;
+}
+
+/* Enhanced Full-bleed SVG Film Grain (Crisp organic texture) */
+.dns-grain {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.88;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 0.95  0 0 0 0 0.88  0 0 0 0 0.95 0'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+  background-size: 240px 240px;
+  animation: 1.4s steps(6, end) infinite dnsGrainJitter;
+  z-index: 2;
+}
+
+/* Secondary Coarse Analog Film Grain */
+.dns-grain-coarse {
+  position: absolute;
+  inset: -25%;
+  width: 150%;
+  height: 150%;
+  opacity: 0.46;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='600'><filter id='g2'><feTurbulence type='fractalNoise' baseFrequency='0.38' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0 0.95 0'/></filter><rect width='100%' height='100%' filter='url(%23g2)'/></svg>");
+  background-size: 500px 500px;
+  animation: 2.2s steps(8, end) infinite dnsGrainJitter;
+  z-index: 2;
+}
+
+@keyframes dnsGrainJitter {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-2%, 2%); }
+  40% { transform: translate(2%, -1%); }
+  60% { transform: translate(-1%, 3%); }
+  80% { transform: translate(3%, -2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ==========================================================================
+   BORDERLESS CENTERED CONTENT (NO CARD BOX)
+   ========================================================================== */
+
+.dns-center-container {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: min(390px, 92vw);
+  margin: auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Top metadata branding */
+.dns-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-family: Archivo, monospace, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.dns-meta-text {
+  color: #a49ea8;
+}
+
+.dns-meta-sep {
+  color: rgba(216, 182, 90, 0.45);
+}
+
+.dns-meta-edition {
+  color: #d8b65a;
+}
+
+/* Authentic Signature Emblem */
+.dns-sig-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 6px 0 18px;
+}
+
+.dns-sig-wrap svg,
+.dns-sig-svg {
+  width: clamp(170px, 44vw, 225px);
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 4px 18px rgba(216, 182, 90, 0.35));
+}
+
+.dns-sig-wrap svg path,
+.dns-sig-svg path {
+  fill: #d8b65a !important;
+  stroke: #d8b65a !important;
+  stroke-width: 1.2px;
+  opacity: 0.95;
+}
+
+/* Editorial Headline */
+.dns-headline {
+  margin: 0 auto 14px;
+  width: 100%;
+  max-width: 350px;
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(32px, 8vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: #efe9d8;
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.75);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.dns-headline span {
+  color: #d8b65a;
+  font-style: italic;
+}
+
+/* Calm, non-techy, human copy */
+.dns-copy {
+  margin: 0 auto 30px;
+  width: 100%;
+  max-width: 320px;
+  font-family: 'Roboto Flex', var(--sans), sans-serif;
+  font-size: clamp(14px, 3.6vw, 16px);
+  line-height: 1.62;
+  color: #d8d3df;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Floating Understated Luxury Button */
+.dns-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.dns-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  background: rgba(20, 18, 24, 0.65);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(216, 182, 90, 0.4);
+  color: #efe9d8;
+  font-family: Archivo, system-ui, sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dns-copy-button:hover,
+.dns-copy-button:focus-visible {
+  background: rgba(216, 182, 90, 0.2);
+  border-color: rgba(216, 182, 90, 0.75);
+  box-shadow: 
+    0 0 30px rgba(216, 182, 90, 0.25),
+    0 8px 32px rgba(0, 0, 0, 0.65);
+  transform: translateY(-1px);
+}
+
+.dns-copy-button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.dns-copy-button.copied {
+  background: rgba(46, 204, 113, 0.2);
+  border-color: rgba(46, 204, 113, 0.6);
+  color: #e8f8f0;
+}
+
+.dns-btn-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/* Viewport requirement note */
+.dns-viewport-note {
+  margin-top: 26px;
+  font-family: Archivo, monospace, sans-serif;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888292;
+  text-align: center;
+}
+
+/* ==========================================================================
+   ACCESSIBILITY: PREFERS-REDUCED-MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .dns-glow-gold,
+  .dns-glow-crimson,
+  .dns-grain,
+  .dns-grain-coarse {
+    animation: none !important;
+  }
+  .dns-copy-button {
+    transition: none !important;
+  }
+}

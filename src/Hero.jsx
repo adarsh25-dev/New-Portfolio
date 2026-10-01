@@ -232,7 +232,21 @@ export default function Hero() {
           tabIndex={menuOpen ? 0 : -1}
         >
           <span>Close</span>
-          <span className="menu-close-x" aria-hidden="true">×</span>
+          <svg
+            className="menu-close-x"
+            viewBox="0 0 14 14"
+            width="14"
+            height="14"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="2" y1="2" x2="12" y2="12" />
+            <line x1="12" y1="2" x2="2" y2="12" />
+          </svg>
         </button>
 
         <nav className="menu-nav" aria-label="Primary">
@@ -253,14 +267,9 @@ export default function Hero() {
         </nav>
 
         <div className="menu-contact" style={{ '--menu-i': navItems.length }}>
-          <a
-            href="#contact"
-            className="menu-contact-label"
-            onClick={handleNavClick('#contact')}
-            tabIndex={menuOpen ? 0 : -1}
-          >
+          <span className="menu-contact-label">
             Reach out to me
-          </a>
+          </span>
           <a
             href="mailto:adarshparmar.dev@gmail.com"
             className="menu-contact-email"

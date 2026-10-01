@@ -2,7 +2,6 @@ import { useRef, useState, forwardRef } from 'react';
 import './Roles.css';
 
 const rolesList = [
-  'Design Engineer',
   'Product Designer',
   'Full-Stack Developer',
   'AI Product Developer',
