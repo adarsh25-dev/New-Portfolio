@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import './Hero.css';
+import LetsChatOverlay from './LetsChatOverlay';
+import { useSecureAsset } from './hooks/useSecureAsset';
 
 const rotatingWords = ['PRESENCE', 'DESIGN', 'IDEAS', 'SYSTEMS', 'VISION'];
 const ROTATE_INTERVAL = 2500;
@@ -9,11 +10,12 @@ const navItems = [
   { label: 'Projects', href: '#projects' },
 ];
 
-const heroVideo = '/assets/hero_vdo-BiUQ78eI.mp4';
+const fallbackHeroVideo = '/assets/hero_vdo-BiUQ78eI.mp4';
 
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
   const [atBottom, setAtBottom] = useState(false);
   const [cueHidden, setCueHidden] = useState(false);
@@ -21,6 +23,7 @@ export default function Hero() {
   const thumbVidRef = useRef(null);
   const modalVidRef = useRef(null);
   const sectionRef = useRef(null);
+  const { url: videoUrl } = useSecureAsset('hero_vdo');
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -167,10 +170,16 @@ export default function Hero() {
         </a>
 
         <div className="nav-right">
-          <a href="#contact" className="nav-btn nav-chat" onClick={handleNavClick('#contact')}>
+          <button
+            type="button"
+            className="nav-btn nav-chat"
+            onClick={() => setChatOpen(true)}
+            aria-label="Open Let's Chat"
+            aria-expanded={chatOpen}
+          >
             <span>Let’s chat</span>
             <span className="nav-arrow" aria-hidden="true">→</span>
-          </a>
+          </button>
         </div>
       </header>
 
@@ -187,12 +196,13 @@ export default function Hero() {
           >
             <video
               ref={thumbVidRef}
-              src={heroVideo}
+              src={videoUrl || fallbackHeroVideo}
               autoPlay
               loop
               muted
               playsInline
               preload="auto"
+              onContextMenu={(e) => e.preventDefault()}
             />
           </button>
           <br />
@@ -328,15 +338,18 @@ export default function Hero() {
           </button>
           <video
             ref={modalVidRef}
-            src={heroVideo}
+            src={videoUrl || fallbackHeroVideo}
             autoPlay
             loop
             playsInline
             controls={false}
             onClick={(e) => e.stopPropagation()}
+            onContextMenu={(e) => e.preventDefault()}
           />
         </div>
       )}
+
+      <LetsChatOverlay isOpen={chatOpen} onClose={() => setChatOpen(false)} />
     </>
   );
 }

@@ -15,6 +15,7 @@ import FeaturedWorks from './FeaturedWorks';
 import Contact from './Contact';
 import Footer from './Footer';
 import DeviceNoticeScreen from './DeviceNoticeScreen';
+import { preloadCriticalAssets, applySecureCssBackground } from './utils/secureAsset';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,6 +44,8 @@ export default function App() {
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
+    preloadCriticalAssets();
+    applySecureCssBackground('hero_bg', '--hero-bg-blob');
   }, []);
 
   // Lock scroll while intro plays

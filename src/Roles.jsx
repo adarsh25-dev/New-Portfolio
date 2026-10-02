@@ -1,5 +1,5 @@
 import { useRef, useState, forwardRef } from 'react';
-import './Roles.css';
+import { useSecureAsset } from './hooks/useSecureAsset';
 
 const rolesList = [
   'Product Designer',
@@ -7,12 +7,13 @@ const rolesList = [
   'AI Product Developer',
 ];
 
-const roleVideoSrc = '/assets/creative-CrXiI4kt.mp4';
+const fallbackRoleVideoSrc = '/assets/creative-CrXiI4kt.mp4';
 
 const Roles = forwardRef((props, ref) => {
   const videoRef = useRef(null);
   const sectionRef = useRef(null);
   const [hovering, setHovering] = useState(false);
+  const { url: videoUrl } = useSecureAsset('creative', { lazy: true, trigger: hovering });
 
   const setCombinedRef = (node) => {
     sectionRef.current = node;
@@ -54,13 +55,14 @@ const Roles = forwardRef((props, ref) => {
       <video
         ref={videoRef}
         className={`roles-cursor-vid${hovering ? ' is-visible' : ''}`}
-        src={roleVideoSrc}
+        src={videoUrl || fallbackRoleVideoSrc}
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
         aria-hidden="true"
+        onContextMenu={(e) => e.preventDefault()}
       />
     </section>
   );

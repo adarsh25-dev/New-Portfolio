@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState, forwardRef } from 'react';
 import VariableFontText from './VariableFontText';
-import './FeaturedWorks.css';
+import { useSecureAsset } from './hooks/useSecureAsset';
 
 const projectsData = [
   {
     seed: 'aurora',
     span: 'big',
+    assetId: 'creative',
     video: '/assets/creative-CrXiI4kt.mp4',
     stillOffset: 1,
     name: 'humanOS',
@@ -17,6 +18,7 @@ const projectsData = [
   {
     seed: 'procrastinator',
     span: 'half',
+    assetId: 'procrastinator',
     photo: '/assets/procrastinator-CdjJLjP4.png',
     fit: 'contain',
     name: 'Procrastinator',
@@ -28,6 +30,7 @@ const projectsData = [
   {
     seed: 'nanofacts',
     span: 'half',
+    assetId: 'nanoFactz',
     photo: '/assets/nanoFactz-1Es8Qbot.png',
     name: 'NanoFactz',
     description:
@@ -38,6 +41,7 @@ const projectsData = [
   {
     seed: 'verde',
     span: 'big',
+    assetId: 'hushMeet',
     video: '/assets/hushMeet-CGzQG0sJ.mp4',
     name: 'HushMeet',
     description:
@@ -50,6 +54,7 @@ function ProjSlide({
   span,
   side = 'left',
   video,
+  assetId,
   stillOffset = 0.5,
   photo,
   fit,
@@ -64,6 +69,10 @@ function ProjSlide({
       ? `https://picsum.photos/seed/${seed}/1600/900`
       : `https://picsum.photos/seed/${seed}/900/1000`;
   const videoRef = useRef(null);
+  const { url: secureUrl } = useSecureAsset(assetId, { lazy: true });
+
+  const activeVideoSrc = secureUrl || video;
+  const activePhotoSrc = secureUrl || photo || fallbackPic;
 
   useEffect(() => {
     if (!video) return;
@@ -92,7 +101,7 @@ function ProjSlide({
       vid.removeEventListener('loadedmetadata', seekStill);
       vid.removeEventListener('ended', onEnd);
     };
-  }, [video, stillOffset]);
+  }, [video, activeVideoSrc, stillOffset]);
 
   return (
     <article
@@ -103,24 +112,26 @@ function ProjSlide({
       {video ? (
         <video
           ref={videoRef}
-          src={video}
+          src={activeVideoSrc}
           muted
           playsInline
           preload="metadata"
           draggable="false"
           aria-label={name}
           className="proj-video"
+          onContextMenu={(e) => e.preventDefault()}
           onClick={(e) => {
             e.preventDefault();
-            onExpand?.({ src: video, name });
+            onExpand?.({ src: activeVideoSrc, name });
           }}
         />
       ) : (
         <img
-          src={photo || fallbackPic}
+          src={activePhotoSrc}
           alt={name || seed}
           loading="lazy"
           draggable="false"
+          onContextMenu={(e) => e.preventDefault()}
         />
       )}
       <div className="proj-info">
@@ -221,6 +232,7 @@ const FeaturedWorks = forwardRef(function (props, ref) {
             playsInline
             controls={false}
             onClick={(e) => e.stopPropagation()}
+            onContextMenu={(e) => e.preventDefault()}
           />
         </div>
       )}

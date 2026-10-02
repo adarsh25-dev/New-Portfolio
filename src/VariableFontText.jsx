@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import './VariableFontText.css';
 
 const DEFAULTS = {
   thinWght: 100,

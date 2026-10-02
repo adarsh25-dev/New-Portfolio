@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import './FixedVideoBg.css';
+import { useSecureAsset } from './hooks/useSecureAsset';
 
-const heroVideo = '/assets/hero_vdo-BiUQ78eI.mp4';
+const fallbackHeroVideo = '/assets/hero_vdo-BiUQ78eI.mp4';
 
 export default function FixedVideoBg() {
   const [active, setActive] = useState(false);
   const rafId = useRef(0);
   const videoRef = useRef(null);
+  const { url: videoUrl } = useSecureAsset('hero_vdo');
 
   useEffect(() => {
     if (!active) return;
@@ -52,12 +53,13 @@ export default function FixedVideoBg() {
       <video
         ref={videoRef}
         className="fvb-video"
-        src={heroVideo}
+        src={videoUrl || fallbackHeroVideo}
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
+        onContextMenu={(e) => e.preventDefault()}
       />
       <div className="fvb-grad" />
     </div>

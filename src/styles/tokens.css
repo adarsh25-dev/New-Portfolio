@@ -5,7 +5,7 @@
   --text-h: #08060d; /* headings - nearly black */
   --bg: #fff;
   --border: #e5e4e7;
-  --accent: #aa3bff; /* pick ONE. commit to it. */
+  --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
 
   --sans: 'Roboto Flex', system-ui, sans-serif;
@@ -14,14 +14,17 @@
   letter-spacing: 0.18px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  /* Encrypted dynamic background blob fallback */
+  --hero-bg-blob: url(/assets/hero_bg-CfSw2las.png);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
     --text-h: #f3f4f6;
-    --bg: #16171d; /* never pure black. it hurts. */
-    --accent: #c084fc; /* lighter - dark bgs eat saturation */
+    --bg: #16171d;
+    --accent: #c084fc;
   }
 }
 
@@ -34,7 +37,7 @@
     height: 100% !important;
   }
 
-  /* Completely suppress all other page elements, videos, loaders, and footers on mobile and tablet devices */
+  /* Suppress desktop sections on mobile in favor of DeviceNoticeScreen */
   .site-main,
   .intro-loader,
   .reveal-bg,
@@ -48,10 +51,10 @@
 }
 
 html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* old Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-html::-webkit-scrollbar { display: none; } /* Chrome, Safari */
+html::-webkit-scrollbar { display: none; }
 
 body {
   margin: 0;
@@ -63,7 +66,25 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-h);
 }
 
-/* site-main: NO overflow:hidden — it breaks position:sticky on descendants */
+/* site-main: NO overflow:hidden — preserves position:sticky on children */
 .site-main {
   position: relative;
+}
+
+/* VariableFontText Component Styles */
+.vft {
+  font-variation-settings: "wght" 820, "wdth" 151;
+  font-family: 'Roboto Flex', system-ui, sans-serif;
+}
+
+.vft-letter {
+  white-space: pre;
+  will-change: font-variation-settings;
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vft-letter {
+    transition: none !important;
+  }
 }

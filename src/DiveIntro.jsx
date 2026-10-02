@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import "./DiveIntro.css";
+import { useSecureAsset } from "./hooks/useSecureAsset";
 
-const heroBgImg = "/assets/hero_bg-CfSw2las.png";
-const heroVideo = "/assets/hero_vdo-BiUQ78eI.mp4";
+const fallbackHeroBgImg = "/assets/hero_bg-CfSw2las.png";
+const fallbackHeroVideo = "/assets/hero_vdo-BiUQ78eI.mp4";
 
 // Scale factor to match the visual size of the original 1600×900 / 140px design
 function calcScale(w, h) {
@@ -13,6 +13,9 @@ export default function DiveIntro() {
   const sectionRef = useRef(null);
   const groupRef = useRef(null);
   const textRef = useRef(null);
+
+  const { url: heroBgUrl } = useSecureAsset('hero_bg');
+  const { url: heroVideoUrl } = useSecureAsset('hero_vdo');
 
   const [dims, setDims] = useState(() => ({
     w: window.innerWidth,
@@ -108,19 +111,21 @@ export default function DiveIntro() {
       <div className="dive-sticky">
         <img
           className="dive-cover-bg"
-          src={heroBgImg}
+          src={heroBgUrl || fallbackHeroBgImg}
           alt=""
           draggable="false"
+          onContextMenu={(e) => e.preventDefault()}
         />
         <div className="dive-masked">
           <video
             className="dive-video"
-            src={heroVideo}
+            src={heroVideoUrl || fallbackHeroVideo}
             autoPlay
             loop
             muted
             playsInline
             preload="auto"
+            onContextMenu={(e) => e.preventDefault()}
           />
           <div className="dive-blur-grad" />
         </div>

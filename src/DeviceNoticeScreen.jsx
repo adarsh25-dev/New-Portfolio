@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./DeviceNoticeScreen.css";
 import sigRaw from "./assets/signature.svg?raw";
 
 // Inject clean class and prepare signature markup

@@ -1,0 +1,74 @@
+{
+  "hero_bg": {
+    "path": "/assets/secure/hero_bg_7e3d72ba.enc",
+    "mime": "image/webp",
+    "type": "image",
+    "originalFile": "hero_bg-CfSw2las.png",
+    "hash": "30053be227723ab2",
+    "size": 50568
+  },
+  "hero_suit": {
+    "path": "/assets/secure/hero_suit_6a2e8f8f.enc",
+    "mime": "image/webp",
+    "type": "image",
+    "originalFile": "hero-Cw4fjYfy.png",
+    "hash": "02333d323221140a",
+    "size": 100298
+  },
+  "jacket": {
+    "path": "/assets/secure/jacket_99018744.enc",
+    "mime": "image/webp",
+    "type": "image",
+    "originalFile": "jacket-ChiCZOcV.jpg",
+    "hash": "652ba0fdda057da7",
+    "size": 45114
+  },
+  "procrastinator": {
+    "path": "/assets/secure/procrastinator_5cf6cc1e.enc",
+    "mime": "image/webp",
+    "type": "image",
+    "originalFile": "procrastinator-CdjJLjP4.png",
+    "hash": "e4db6a15e643dabb",
+    "size": 29392
+  },
+  "nanoFactz": {
+    "path": "/assets/secure/nanoFactz_9aef546f.enc",
+    "mime": "image/webp",
+    "type": "image",
+    "originalFile": "nanoFactz-1Es8Qbot.png",
+    "hash": "990d4b7a3d6cba25",
+    "size": 35232
+  },
+  "bgvideo": {
+    "path": "/assets/secure/bgvideo_ad7ebead.enc",
+    "mime": "video/mp4",
+    "type": "video",
+    "originalFile": "bgvideo-WLnX9sPP.mp4",
+    "hash": "3c6072e537e64a95",
+    "size": 1127000
+  },
+  "hero_vdo": {
+    "path": "/assets/secure/hero_vdo_a4f756b6.enc",
+    "mime": "video/mp4",
+    "type": "video",
+    "originalFile": "hero_vdo-BiUQ78eI.mp4",
+    "hash": "99c6306ef4665ebe",
+    "size": 9197723
+  },
+  "creative": {
+    "path": "/assets/secure/creative_1eda7935.enc",
+    "mime": "video/mp4",
+    "type": "video",
+    "originalFile": "creative-CrXiI4kt.mp4",
+    "hash": "f5d6ce6c8345bc12",
+    "size": 13642663
+  },
+  "hushMeet": {
+    "path": "/assets/secure/hushMeet_d6e24cdd.enc",
+    "mime": "video/mp4",
+    "type": "video",
+    "originalFile": "hushMeet-CGzQG0sJ.mp4",
+    "hash": "18672b9481246046",
+    "size": 5404379
+  }
+}

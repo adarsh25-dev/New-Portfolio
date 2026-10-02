@@ -1,4 +1,3 @@
-import "./IntroLoader.css";
 import sigRaw from "./assets/signature.svg?raw";
 
 // Vite's ?raw gives us the SVG as a string, so we can inject

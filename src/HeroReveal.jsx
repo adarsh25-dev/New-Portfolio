@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import './HeroReveal.css';
+import { useSecureAsset } from './hooks/useSecureAsset';
 
-const jacketImg = '/assets/jacket-ChiCZOcV.jpg';
-const heroImg = '/assets/hero-Cw4fjYfy.png';
+const fallbackJacketImg = '/assets/jacket-ChiCZOcV.jpg';
+const fallbackHeroImg = '/assets/hero-Cw4fjYfy.png';
 
 export default function HeroReveal() {
   const btnRef = useRef(null);
   const [active, setActive] = useState(false);
   const [forced, setForced] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+
+  const { url: jacketUrl } = useSecureAsset('jacket');
+  const { url: heroSuitUrl } = useSecureAsset('hero_suit');
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -137,16 +140,18 @@ export default function HeroReveal() {
       >
         <img
           className="reveal-img reveal-base"
-          src={jacketImg}
+          src={jacketUrl || fallbackJacketImg}
           alt="Portrait wearing a black jacket"
           draggable="false"
+          onContextMenu={(e) => e.preventDefault()}
         />
         <img
           className="reveal-img reveal-top"
-          src={heroImg}
+          src={heroSuitUrl || fallbackHeroImg}
           alt=""
           loading="lazy"
           draggable="false"
+          onContextMenu={(e) => e.preventDefault()}
         />
         <svg
           className="reveal-shape"

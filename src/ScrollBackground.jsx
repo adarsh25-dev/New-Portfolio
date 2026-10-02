@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import './ScrollBackground.css';
+import { useSecureAsset } from './hooks/useSecureAsset';
 
-const bgVideo = '/assets/bgvideo-WLnX9sPP.mp4';
+const fallbackBgVideo = '/assets/bgvideo-WLnX9sPP.mp4';
 
 export default function ScrollBackground({ zoomed = false }) {
   const rootRef = useRef(null);
@@ -42,6 +42,8 @@ export default function ScrollBackground({ zoomed = false }) {
     };
   }, []);
 
+  const { url: videoUrl } = useSecureAsset('bgvideo');
+
   return (
     <div
       ref={rootRef}
@@ -50,12 +52,13 @@ export default function ScrollBackground({ zoomed = false }) {
     >
       <video
         className="sb-video"
-        src={bgVideo}
+        src={videoUrl || fallbackBgVideo}
         autoPlay
         loop
         muted
         playsInline
         preload="auto"
+        onContextMenu={(e) => e.preventDefault()}
       />
       <div className="sb-wash" />
       <div className="sb-tint" />
