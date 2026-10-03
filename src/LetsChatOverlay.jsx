@@ -6,6 +6,11 @@ const rotatingTerms = ['impact', 'visions', 'systems', 'products', 'ideas'];
 
 const chatLinks = [
   {
+    label: 'Book a Call ↗',
+    href: 'https://cal.com/adarshparmar/15min',
+    external: true,
+  },
+  {
     label: 'Send Email',
     href: `mailto:${emailAddress}?subject=Let's%20build%20something%20together`,
   },
@@ -74,13 +79,13 @@ export default function LetsChatOverlay({ isOpen, onClose }) {
       role="dialog"
       aria-modal="true"
       aria-hidden={!isOpen}
-      aria-label="Let's Chat"
+      aria-label="Book a call"
     >
       <button
         type="button"
         className="chat-close"
         onClick={onClose}
-        aria-label="Close Let's Chat"
+        aria-label="Close Book a call"
         tabIndex={isOpen ? 0 : -1}
       >
         <span>Close</span>
@@ -124,7 +129,7 @@ export default function LetsChatOverlay({ isOpen, onClose }) {
         </div>
 
         {/* Monumental Links with Peer-Blur */}
-        <nav className="chat-links-nav" aria-label="Let's Chat Navigation">
+        <nav className="chat-links-nav" aria-label="Book a call navigation">
           <ul>
             {chatLinks.map((item, idx) => (
               <li key={item.label} style={{ '--c-i': idx }} className="chat-link-item">

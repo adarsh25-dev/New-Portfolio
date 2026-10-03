@@ -13,7 +13,6 @@ const projectsData = [
     description:
       'An AI-powered personal OS that helps people organize their goals, habits, focus, and personal growth in one unified experience.',
     link: 'https://human-os-two.vercel.app/',
-    repo: 'https://github.com/gargibhardwaj24/humanOS',
   },
   {
     seed: 'procrastinator',
@@ -25,7 +24,6 @@ const projectsData = [
     description:
       'Procrastinator is an app that helps people beat procrastination, stay focused, and get things done.',
     link: 'https://procrastinator-zeta.vercel.app/',
-    repo: 'https://github.com/gargibhardwaj24/Procrastinator',
   },
   {
     seed: 'nanofacts',
@@ -36,7 +34,6 @@ const projectsData = [
     description:
       'NanoFacts is a micro-learning platform that delivers short, engaging, and easy-to-digest facts, helping users learn something new in just a few seconds.',
     link: 'https://nanofacts.vercel.app/',
-    repo: 'https://github.com/gargibhardwaj24/NanoFactz',
   },
   {
     seed: 'verde',
@@ -61,7 +58,6 @@ function ProjSlide({
   name,
   description,
   link,
-  repo,
   onExpand,
 }) {
   const fallbackPic =
@@ -142,11 +138,6 @@ function ProjSlide({
           {link && (
             <a href={link} target="_blank" rel="noreferrer">
               Visit ↗
-            </a>
-          )}
-          {repo && (
-            <a href={repo} target="_blank" rel="noreferrer">
-              GitHub ↗
             </a>
           )}
         </div>

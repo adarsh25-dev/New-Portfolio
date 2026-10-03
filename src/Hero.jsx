@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import LetsChatOverlay from './LetsChatOverlay';
 import { useSecureAsset } from './hooks/useSecureAsset';
 
 const rotatingWords = ['PRESENCE', 'DESIGN', 'IDEAS', 'SYSTEMS', 'VISION'];
@@ -15,7 +14,6 @@ const fallbackHeroVideo = '/assets/hero_vdo-BiUQ78eI.mp4';
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
   const [wordIndex, setWordIndex] = useState(0);
   const [atBottom, setAtBottom] = useState(false);
   const [cueHidden, setCueHidden] = useState(false);
@@ -170,16 +168,16 @@ export default function Hero() {
         </a>
 
         <div className="nav-right">
-          <button
-            type="button"
+          <a
+            href="https://cal.com/adarshparmar/15min"
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-btn nav-chat"
-            onClick={() => setChatOpen(true)}
-            aria-label="Open Let's Chat"
-            aria-expanded={chatOpen}
+            aria-label="Book a call"
           >
-            <span>Let’s chat</span>
+            <span>Book a call</span>
             <span className="nav-arrow" aria-hidden="true">→</span>
-          </button>
+          </a>
         </div>
       </header>
 
@@ -348,8 +346,6 @@ export default function Hero() {
           />
         </div>
       )}
-
-      <LetsChatOverlay isOpen={chatOpen} onClose={() => setChatOpen(false)} />
     </>
   );
 }
