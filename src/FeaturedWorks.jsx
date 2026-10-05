@@ -1,55 +1,55 @@
-import { useEffect, useRef, useState, forwardRef } from 'react';
-import VariableFontText from './VariableFontText';
-import { useSecureAsset } from './hooks/useSecureAsset';
+import { useEffect, useRef, useState, forwardRef } from "react";
+import VariableFontText from "./VariableFontText";
+import { useSecureAsset } from "./hooks/useSecureAsset";
 
 const projectsData = [
   {
-    seed: 'aurora',
-    span: 'big',
-    assetId: 'creative',
-    video: '/assets/creative-CrXiI4kt.mp4',
+    seed: "aurora",
+    span: "big",
+    assetId: "creative",
+    video: "/assets/creative-CrXiI4kt.mp4",
     stillOffset: 1,
-    name: 'humanOS',
+    name: "humanOS",
     description:
-      'An AI-powered personal OS that helps people organize their goals, habits, focus, and personal growth in one unified experience.',
-    link: 'https://human-os-two.vercel.app/',
+      "An AI-powered personal OS that helps people organize their goals, habits, focus, and personal growth in one unified experience.",
+    link: "https://human-os-two.vercel.app/",
   },
   {
-    seed: 'procrastinator',
-    span: 'half',
-    assetId: 'procrastinator',
-    photo: '/assets/procrastinator-CdjJLjP4.png',
-    fit: 'contain',
-    name: 'Procrastinator',
+    seed: "procrastinator",
+    span: "half",
+    assetId: "procrastinator",
+    photo: "/assets/procrastinator-CdjJLjP4.png",
+    fit: "contain",
+    name: "Procrastinator",
     description:
-      'Procrastinator is an app that helps people beat procrastination, stay focused, and get things done.',
-    link: 'https://procrastinator-zeta.vercel.app/',
+      "Procrastinator is an app that helps people beat procrastination, stay focused, and get things done.",
+    link: "https://procrastinator-zeta.vercel.app/",
   },
   {
-    seed: 'nanofacts',
-    span: 'half',
-    assetId: 'nanoFactz',
-    photo: '/assets/nanoFactz-1Es8Qbot.png',
-    name: 'NanoFactz',
+    seed: "nanofacts",
+    span: "half",
+    assetId: "nanoFactz",
+    photo: "/assets/nanoFactz-1Es8Qbot.png",
+    name: "NanoFactz",
     description:
-      'NanoFacts is a micro-learning platform that delivers short, engaging, and easy-to-digest facts, helping users learn something new in just a few seconds.',
-    link: 'https://nanofacts.vercel.app/',
+      "NanoFacts is a micro-learning platform that delivers short, engaging, and easy-to-digest facts, helping users learn something new in just a few seconds.",
+    link: "https://nanofactz.vercel.app/",
   },
   {
-    seed: 'verde',
-    span: 'big',
-    assetId: 'hushMeet',
-    video: '/assets/hushMeet-CGzQG0sJ.mp4',
-    name: 'HushMeet',
+    seed: "verde",
+    span: "big",
+    assetId: "hushMeet",
+    video: "/assets/hushMeet-CGzQG0sJ.mp4",
+    name: "HushMeet",
     description:
-      'HushMeet is an AI-powered communication tool that converts lip movements into real-time text and voice, making conversations, meetings, and communication accessible even in noisy environments',
+      "HushMeet is an AI-powered communication tool that converts lip movements into real-time text and voice, making conversations, meetings, and communication accessible even in noisy environments",
   },
 ];
 
 function ProjSlide({
   seed,
   span,
-  side = 'left',
+  side = "left",
   video,
   assetId,
   stillOffset = 0.5,
@@ -61,7 +61,7 @@ function ProjSlide({
   onExpand,
 }) {
   const fallbackPic =
-    span === 'big'
+    span === "big"
       ? `https://picsum.photos/seed/${seed}/1600/900`
       : `https://picsum.photos/seed/${seed}/900/1000`;
   const videoRef = useRef(null);
@@ -89,20 +89,20 @@ function ProjSlide({
       seekStill();
     };
 
-    vid.addEventListener('loadedmetadata', seekStill);
-    vid.addEventListener('ended', onEnd);
+    vid.addEventListener("loadedmetadata", seekStill);
+    vid.addEventListener("ended", onEnd);
     if (vid.readyState >= 1) seekStill();
 
     return () => {
-      vid.removeEventListener('loadedmetadata', seekStill);
-      vid.removeEventListener('ended', onEnd);
+      vid.removeEventListener("loadedmetadata", seekStill);
+      vid.removeEventListener("ended", onEnd);
     };
   }, [video, activeVideoSrc, stillOffset]);
 
   return (
     <article
       className={`proj-slide proj-slide--${span} proj-slide--from-${side}${
-        fit === 'contain' ? ' proj-slide--contain' : ''
+        fit === "contain" ? " proj-slide--contain" : ""
       }`}
     >
       {video ? (
@@ -153,13 +153,13 @@ const FeaturedWorks = forwardRef(function (props, ref) {
   useEffect(() => {
     if (!activeModal) return;
     const onKey = (e) => {
-      if (e.key === 'Escape') setActiveModal(null);
+      if (e.key === "Escape") setActiveModal(null);
     };
-    document.addEventListener('keydown', onKey);
+    document.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
-      document.removeEventListener('keydown', onKey);
+      document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
   }, [activeModal]);
@@ -167,34 +167,53 @@ const FeaturedWorks = forwardRef(function (props, ref) {
   useEffect(() => {
     const el = listRef.current;
     if (!el) return;
-    const slides = Array.from(el.querySelectorAll('.proj-slide'));
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const slides = Array.from(el.querySelectorAll(".proj-slide"));
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReduced) {
-      slides.forEach((s) => s.classList.add('is-in'));
+      slides.forEach((s) => s.classList.add("is-in"));
       return;
     }
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          entry.target.classList.toggle('is-in', entry.isIntersecting);
+          entry.target.classList.toggle("is-in", entry.isIntersecting);
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     );
     slides.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={ref} className="fw-section" id="projects" aria-label="Featured Works">
+    <section
+      ref={ref}
+      className="fw-section"
+      id="projects"
+      aria-label="Featured Works"
+    >
       <VariableFontText as="h2" className="fw-heading" text="Featured Works" />
       <div className="fw-projects" ref={listRef}>
         <ProjSlide {...projectsData[0]} side="left" onExpand={setActiveModal} />
         <div className="proj-row">
-          <ProjSlide {...projectsData[1]} side="left" onExpand={setActiveModal} />
-          <ProjSlide {...projectsData[2]} side="right" onExpand={setActiveModal} />
+          <ProjSlide
+            {...projectsData[1]}
+            side="left"
+            onExpand={setActiveModal}
+          />
+          <ProjSlide
+            {...projectsData[2]}
+            side="right"
+            onExpand={setActiveModal}
+          />
         </div>
-        <ProjSlide {...projectsData[3]} side="right" onExpand={setActiveModal} />
+        <ProjSlide
+          {...projectsData[3]}
+          side="right"
+          onExpand={setActiveModal}
+        />
       </div>
 
       {activeModal && (
@@ -231,6 +250,6 @@ const FeaturedWorks = forwardRef(function (props, ref) {
   );
 });
 
-FeaturedWorks.displayName = 'FeaturedWorks';
+FeaturedWorks.displayName = "FeaturedWorks";
 
 export default FeaturedWorks;
